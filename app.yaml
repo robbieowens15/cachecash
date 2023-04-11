@@ -2,6 +2,7 @@
 runtime: php74
 
 # Defaults to "serve index.php" 
-entrypoint: serve homescreen.php
+# entrypoint: serve homescreen.php
 
 # If your main page is index.php, comment the above entrypoint setting
+

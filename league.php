@@ -44,5 +44,8 @@
 <?php endforeach; ?>
 </table>
 </div>
+<div class="row justify-content-center">
+<a class="btn btn-primary" href="/" role="button">Back to Home</a>
+</div>
 </body>
 </html>
