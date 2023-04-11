@@ -74,12 +74,12 @@ $dsn = "mysql:unix_socket=/cloudsql/cachecash-381521:us-east4:cache-instance;dbn
 
 // Create an instance of PDO (PHP Data Objects) which connects to a MySQL database
 // (PDO defines an interface for accessing databases)
-// Syntax: 
+// Syntax:
 //    new PDO(dsn, username, password);
 
 
 /** connect to the database **/
-try 
+try
 {
 //  $db = new PDO("mysql:host=$hostname;dbname=db-demo", $username, $password);
    $db = new PDO($dsn, $username, $password);
@@ -90,7 +90,7 @@ catch (PDOException $e)     // handle a PDO exception (errors thrown by the PDO 
 {
    // Call a method from any object, use the object's name followed by -> and then method's name
    // All exception objects provide a getMessage() method that returns the error message 
-   $error_message = $e->getMessage();        
+   $error_message = $e->getMessage();
    echo "<p>An error occurred while connecting to the database: $error_message </p>";
 }
 catch (Exception $e)       // handle any type of exception

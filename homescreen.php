@@ -43,7 +43,7 @@
 		$league = $running_variable['league'];
 ?>
 		<tr>
-			<td><?php echo '<a href="https://cachecash-381521.uk.r.appspot.com/league?league=' . $league . '">' . $league . '</a>'; ?></td>
+			<td><?php echo '<a href="/league.php?league=' . $league . '">' . $league . '</a>'; ?></td>
 			<td><?php echo $running_variable['count']; ?></td>
 		</tr>
 <?php endforeach; ?>

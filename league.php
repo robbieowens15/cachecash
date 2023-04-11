@@ -9,15 +9,15 @@
 	require 'connect-db.php';
 	$league = $_GET['league'];
 
-	function getGames($db) {
-		$sql = "SELECT * FROM games WHERE league = " . $league;
+	function getGames($db, $league) {
+		$sql = "SELECT * FROM games WHERE league = '$league'";
 		$stmt = $db->prepare($sql);
 
 		$stmt->execute();
 		$leagues = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		return $leagues;
 	}
-	$leagueGames = getGames($db);
+	$leagueGames = getGames($db, $league);
 ?>
 
 <body>
@@ -26,16 +26,20 @@
 <div class="row justify-content-center">
 <table class="table table-bordered" style="width:70%">
   <thead>
-    <th width="50%">Away Team
-    <th width="50%">Home Team
-	<th width="50%">Away Team
-    <th width="50%">Home Team
+    <th width="20%">Home Team
+    <th width="20%">Away Team
+	<th width="20%">Home Team Spread
+    <th width="20%">Over/Under
+	<th width="20%">Home Moneyline
   </tr>
   </thead>
 <?php foreach ($leagueGames as $running_variable): ?>
   <tr>
-     <td><?php echo $running_variable['league']; ?></td>
-	 <td><?php echo $running_variable['count']; ?></td>
+     <td><?php echo $running_variable['home_team']; ?></td>
+	 <td><?php echo $running_variable['away_team']; ?></td>
+	 <td><?php echo $running_variable['homeSpread']; ?></td>
+	 <td><?php echo $running_variable['over_under']; ?></td>
+	 <td><?php echo $running_variable['homeMoneyline']; ?></td>
   </tr>
 <?php endforeach; ?>
 </table>
