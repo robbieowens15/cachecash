@@ -6,6 +6,7 @@
 <?php
 session_start();
 require 'connect-db.php';
+include 'navbar.php';
 
 if ( !isset($_POST['username'], $_POST['password']) ) {
 	exit('Please fill both the username and password fields!');
@@ -35,6 +36,7 @@ if (password_verify($_POST['password'], $running_variable['password'])){
 else{
     echo 'Incorrect username and/or password!';
     ?>
+    <div></div>
     <a class="btn btn-primary" href="/cachecash/homescreen.php" role="button">Back to Home</a>
     <?php
 }

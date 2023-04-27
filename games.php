@@ -6,10 +6,19 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <?php
-include 'connect-db-local.php';
+include 'connect-db.php';
 include 'navbar.php';
-require 'connect-db-local.php'
+require 'connect-db.php'
 ?>
+<style>
+	.center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+  }
+</style>
+<img style="width: 20%;" src="img/cachecash.png" class="center">
 <body>
 	<div class="container">
 			<div class="row justify-content-center">
@@ -59,8 +68,7 @@ require 'connect-db-local.php'
 									</thead>
 									<tbody>
 										<?php
-											$con = mysqli_connect("localhost:3306","root","Wahoos4750","CacheCash");
-
+											// $con = mysqli_connect("localhost:3306","root","Wahoos4750","CacheCash");
 											if(isset($_GET['from_date']) && isset($_GET['to_date']))
 											{
 												$from_date = $_GET['from_date'];
@@ -72,6 +80,7 @@ require 'connect-db-local.php'
 												$stmt = $db->prepare($sql);
 												$stmt->execute();
 												$games = $stmt->fetchAll(PDO::FETCH_ASSOC);
+												echo $games;
 												if($stmt->rowCount() > 0)
 												{
 													foreach($games as $row):?>

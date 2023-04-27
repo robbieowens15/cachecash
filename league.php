@@ -7,6 +7,7 @@
 
 <?php
 	require 'connect-db.php';
+	include 'navbar.php';
 	$league = $_GET['league'];
 
 	function getGames($db, $league) {
@@ -21,8 +22,17 @@
 ?>
 
 <body>
-<hr>
-<h4> <?php echo $league . " Games" ?> </h4>
+<div>&nbsp</div>
+<style>
+	.center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+  }
+</style>
+<img style="width: 20%;" src="img/cachecash.png" class="center">
+<h4 style="text-align:center;"> <?php echo $league . " Games" ?> </h4>
 <div class="row justify-content-center">
 <table class="table table-bordered" style="width:70%">
   <thead>
@@ -45,7 +55,7 @@
 </table>
 </div>
 <div class="row justify-content-center">
-<a class="btn btn-primary" href="/" role="button">Back to Home</a>
+<a class="btn btn-primary" href="/cachecash/homescreen.php" role="button">Back to Home</a>
 </div>
 </body>
 </html>
