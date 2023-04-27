@@ -3,11 +3,11 @@
 ////////////////////////////////////////////
 
 /** S23, PHP (on Google Standard App Engine) connect to MySQL instance (GCP) **/
-$username = 'root';                       // or your username
-$password = 'Wahoos4750';
-$host = 'cachecash-381521:us-east4:cache-instance';       // e.g., 'cs4750:us-east4:db-demo'; 
-$dbname = 'CacheCash';           // e.g., 'guestbook';
-$dsn = "mysql:unix_socket=/cloudsql/cachecash-381521:us-east4:cache-instance;dbname=CacheCash";
+// $username = 'root';                       // or your username
+// $password = 'Wahoos4750';
+// $host = 'cachecash-381521:us-east4:cache-instance';       // e.g., 'cs4750:us-east4:db-demo'; 
+// $dbname = 'CacheCash';           // e.g., 'guestbook';
+// $dsn = "mysql:unix_socket=/cloudsql/cachecash-381521:us-east4:cache-instance;dbname=CacheCash";
       // e.g., "mysql:unix_socket=/cloudsql/cs4750:us-east4:db-demo;dbname=guestbook";
 // --------- to test, include app.yaml with the following code
 // runtime: php74
@@ -42,11 +42,11 @@ $dsn = "mysql:unix_socket=/cloudsql/cachecash-381521:us-east4:cache-instance;dbn
 ////////////////////////////////////////////
 
 /** S23, PHP (on GCP, local XAMPP, or CS server) connect to MySQL (on CS server) **/
-// $username = 'cbo9hrx'; 
-// $password = 'X1Yit-E7gNT.@lx2';
-// $host = 'mysql01.cs.virginia.edu';
-// $dbname = 'cbo9hrx';
-// $dsn = "mysql:host=$host;dbname=$dbname";
+$username = 'jm3tj'; 
+$password = 'blah123';
+$host = 'mysql01.cs.virginia.edu';
+$dbname = 'jm3tj';
+$dsn = "mysql:host=$host;dbname=$dbname";
 ////////////////////////////////////////////
 
 // To find a hostname, access phpMyAdmin

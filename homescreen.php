@@ -6,6 +6,23 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <?php
+
+session_start();
+// Check if the user is logged in
+if (!isset($_SESSION['loggedin'])) {
+	?>
+	<a class="btn btn-primary" href="/cachecash/login.php" role="button">Login</a>
+	<?php
+}
+else{
+	echo 'Welcome ' . $_SESSION['name'] . '!';
+	?>
+	<a class="btn btn-primary" href="/cachecash/logout.php" role="button">Logout</a>
+	<?php
+}
+?>
+
+<?php
 	require 'connect-db.php';
 
 	// function getLeagues() {
@@ -43,7 +60,7 @@
 		$league = $running_variable['league'];
 ?>
 		<tr>
-			<td><?php echo '<a href="/league.php?league=' . $league . '">' . $league . '</a>'; ?></td>
+			<td><?php echo '<a href="/cachecash/league.php?league=' . $league . '">' . $league . '</a>'; ?></td>
 			<td><?php echo $running_variable['count']; ?></td>
 		</tr>
 <?php endforeach; ?>
