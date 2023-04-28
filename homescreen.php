@@ -49,4 +49,17 @@ require 'connect-db.php';
 </table>
 </div>
 </body>
+<style>
+	footer {
+        position: absolute;
+        bottom: 0;
+        height: 50px; /* adjust as needed */
+        background-color: #f2f2f2;
+        width: 100%;
+        text-align: center;
+      }
+	</style>
+<footer>
+<a href="/cachecash/admin.php">Admin Page</a>
+</footer>
 </html>
