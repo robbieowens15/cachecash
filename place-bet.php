@@ -5,7 +5,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <body>
-        <h2>Debug Output:</h2>
+        <h2>Form Processing Debug Output:</h2>
             <?php
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     // process form data and generate output

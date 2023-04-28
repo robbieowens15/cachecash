@@ -138,41 +138,40 @@ function getBets($db, $user) {
 															<td> some_$ </td> -->
 
 															<!-- Form to Create a bet / Display a bet starts here -->
-															<td colspan="3">
 															<form action="place-bet.php" method="POST">
-
+																<td>
 																<div class="form-group">
 																	<div class="dropdown">
 																		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 																			Select an option
 																		</button>
 																		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-																		<a class="dropdown-item" href="#" data-value="Option 1" onclick="setDropdownText(this)">Option 1
+																		<a class="dropdown-item" href="#" data-value="Home Spread" onclick="setDropdownText(this)">Home Spread
 																			<select style="display:none;">
 																				<option>Home Spread</option>
 																			</select>
 																		</a>
-																		<a class="dropdown-item" href="#" data-value="Option 2" onclick="setDropdownText(this)">Option 2
+																		<a class="dropdown-item" href="#" data-value="Away Spread" onclick="setDropdownText(this)">Away Spread
 																			<select style="display:none;">
 																				<option>Away Spread</option>
 																			</select>
 																		</a>
-																		<a class="dropdown-item" href="#" data-value="Option 3" onclick="setDropdownText(this)">Option 3
+																		<a class="dropdown-item" href="#" data-value="Home Moneyline" onclick="setDropdownText(this)">Home Moneyline
 																			<select style="display:none;">
 																				<option>Home Moneyline</option>
 																			</select>
 																		</a>
-																		<a class="dropdown-item" href="#" data-value="Option 4" onclick="setDropdownText(this)">Option 4
+																		<a class="dropdown-item" href="#" data-value="Away Moneyline" onclick="setDropdownText(this)">Away Moneyline
 																			<select style="display:none;">
 																				<option>Away Moneyline</option>
 																			</select>
 																		</a>
-																		<a class="dropdown-item" href="#" data-value="Option 5" onclick="setDropdownText(this)">Option 5
+																		<a class="dropdown-item" href="#" data-value="Over" onclick="setDropdownText(this)">Over
 																			<select style="display:none;">
 																				<option>Over</option>
 																			</select>
 																		</a>
-																		<a class="dropdown-item" href="#" data-value="Option 6" onclick="setDropdownText(this)">Option 6
+																		<a class="dropdown-item" href="#" data-value="Under" onclick="setDropdownText(this)">Under
 																			<select style="display:none;">
 																				<option>Under</option>
 																			</select>
@@ -181,7 +180,7 @@ function getBets($db, $user) {
 																	</div>
 																	<input type="hidden" name="selectedOption" id="selectedOption" required>
 																</div>
-
+																</td>
 																<script>
 																	function setDropdownText(el) {
 																		var text = el.getAttribute("data-value");
@@ -190,15 +189,21 @@ function getBets($db, $user) {
 																	}
 																</script>
 
+																<td>
+																	<div class="form-group">
+																		<input type="number" step="1.00" class="form-control" id="floatingInput" name="wager_amount" placeholder="0.00" required style="width: 100px;">
+																	</div>
+																</td>
 
-																<div class="form-group">
-																	<input type="number" step="1.00" class="form-control" id="floatingInput" name="wager_amount" placeholder="0.00" required style="width: 100px;">
-																</div>
+																<td>
+																	<input type="submit" class="btn btn-primary" />
+																</td>
 
-																<input type="submit" name="place" value="Place Bet" class="btn btn-primary" />
-															
+																<input type="hidden" name="game_id" value="<?=  $row['game_id'] ?>" />
+																<input type="hidden" name="username" value="<?=  $_SESSION['name'] ?>" />
+																<input type="hidden" name="db" value="<?= $db ?>" />
 														</form>
-														</td>
+														
 														<td> - </td>
 														<!-- ENDS HERE -->
 														</tr>
