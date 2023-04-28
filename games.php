@@ -198,13 +198,15 @@ function getBets($db, $user) {
 																<td>
 																	<input type="submit" class="btn btn-primary" />
 																</td>
-
+																
+																<!-- Pass to form processing (place-bet.php), but do not take input! -->
 																<input type="hidden" name="game_id" value="<?=  $row['game_id'] ?>" />
 																<input type="hidden" name="username" value="<?=  $_SESSION['name'] ?>" />
 																<input type="hidden" name="db" value="<?= $db ?>" />
+																<input type="hidden" name="redirect_uri" value="<?= "://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']; ?>" />
 														</form>
 														
-														<td> - </td>
+														<td> NA </td>
 														<!-- ENDS HERE -->
 														</tr>
 													<?php

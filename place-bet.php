@@ -7,45 +7,93 @@
     <body>
         <h2>Form Processing Debug Output:</h2>
             <?php
-                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    // process form data and generate output
-                    $output = var_dump($_POST);
-                
-                    // display output in a preformatted way
-                    echo '<pre>';
-                    echo $output;
-                    echo '</pre>';
-                }
-                
-
                 require 'connect-db.php';
                 include 'navbar.php';
                 $prof = $_GET['prof'];
                 $user = $_SESSION['name'];
 
-                if (isset($_POST['submit'])) {
-                    // place_bet($db, $game_id, $bet_type, $wager);
+                echo '<pre>';
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    // process form data and generate output
+                    echo "Post Request info\n";
+                    var_dump($_POST);
                     place_bet();
                 }
 
                 // function place_bet($db, $game_id, $bet_type, $wager){
                 function place_bet() {
-                    $wager_amount = $_POST['bet_amount'];
-                    $selectedOption = $_POST["selectedOption"];
-                    var_dump($selectedOption);
-                    var_dump($wager_amount);
-                    echo "<p>";
-                        echo "The user entered a bet amount of: " . $wager_amount;
-                        echo "The user entered a bet type of: " . $selectedOption;
-                        echo var_dump($wager_amount);
-                        echo var_dump($selectedOption);
-                    echo "</p>";
+                    global $db;
 
-                    // $sql = "INSERT INTO bets(bet_num, email, game_id, team, wager, bet_type, active) 
-                    // VALUES(...);";
-                    // $stmt = $db->prepare($sql);
-                    // $stmt->execute();
+                    // Find user
+                    $query_get_user = "SELECT id, balance FROM accounts WHERE username = :username";
+                    $statement = $db->prepare($query_get_user);
+                    $statement->bindValue(':username', $_SESSION['name']);
+                    $statement->execute();
+                    $user_tuple = $statement->fetchAll(PDO::FETCH_ASSOC);
+                    echo "User Attributes: ";
+                    echo var_dump($user_tuple);
+                    $statement->closeCursor();
+
+                    //Check if user already bet on this game
+                    $query_check_already_bet = "SELECT IF(EXISTS (
+                        SELECT * FROM bets 
+                        WHERE game_id = :game_id AND account_id = :account_id
+                        ),
+                        1,
+                        0
+                    ) AS result";
+                    $statement = $db->prepare($query_check_already_bet);
+                    $statement->bindValue(':account_id', $user_tuple['id']);
+                    $statement->bindValue(':game_id', $_POST['game_id']);
+                    $statement->execute();
+                    $has_bet = $statement->fetchAll(PDO::FETCH_ASSOC);
+                    echo "User has bet?";
+                    echo var_dump($has_bet);
+                    if ($has_bet[0]["result"] == 1) {
+                        echo "<h1>Already bet on this game</h1>";
+                    }
+
+                    // Check if user has enough money
+                    if ($user_tuple[0]['balance'] < floatval($_POST['wager_amount'])) {
+                        echo "<h1>Error Balance is too low</h1>";
+                    }
+
+                    //Get the game the user want to bet on
+                    $query_game = "SELECT home_team, away_team FROM games WHERE game_id = :game_id";
+                    $statement = $db->prepare($query_game);
+                    $statement->bindValue(':game_id', $_POST['game_id']);
+                    $statement->execute();
+                    $teams = $statement->fetchAll(PDO::FETCH_ASSOC);
+                    $statement->closeCursor();
+                    echo "Teams: ";
+                    echo var_dump($teams);
+
+                    $team = NULL; //default for OVER UNDER
+                    if ($_POST['selectedOption'] == "Away Moneyline" OR $_POST['selectedOption'] == "Away Spread"){
+                        $team = $teams[0]['away_team'];
+                    } else if ($_POST['selectedOption'] == "Home Moneyline" OR $_POST['selectedOption'] == "Home Spread") {
+                        $team = $teams[0]['home_team'];
+                    }
+                    echo "Selected the team: " . $team . "\n";
+
+
+                    //Add new bet
+                    $query_place_bet = "INSERT INTO 
+                        bets(account_id, game_id, team, wager, bet_type, active) 
+                        VALUES (:account_id, :game_id, :team, :wager, :bet_type, True)";
+                    echo $query_place_bet;
+                    $statement = $db->prepare($query_place_bet);
+                    $statement->bindValue(':account_id', $user_tuple[0]['id']);
+                    $statement->bindValue(':game_id', $_POST['game_id']);
+                    $statement->bindValue(':team', $team);
+                    $statement->bindValue(':wager', floatval($_POST['wager_amount']));
+                    $statement->bindValue(':bet_type', $_POST['selectedOption']);
+                    echo $statement;
+                    $statement->execute();
+                    $statement->closeCursor();
+                    echo "Successful Bet placed!";
                 }
+                echo '</pre>';
             ?>
     </body>
 </html>
