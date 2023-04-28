@@ -8,7 +8,15 @@
 <?php
 include 'connect-db.php';
 include 'navbar.php';
-require 'connect-db.php'
+require 'connect-db.php';
+
+function getBets($db, $user) {
+    $sql = "SELECT username FROM accounts WHERE email IN (SELECT email_2 FROM friends WHERE email_1=(SELECT email from accounts WHERE username='$user'))";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    $f = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $f;
+}
 ?>
 <style>
 	.center {
@@ -61,9 +69,12 @@ require 'connect-db.php'
 											<th>Home Team</th>
 											<th>Away Team</th>
 											<th>Home Team Spread</th>
+											<th>Away Team Spread</th>
 											<th>Over/Under</th>
 											<th>Home Moneyline</th>
+											<th>Away Moneyline</th>
 											<th>Date</th>
+											<th>Bet Type</th>
 											<th>Wager ($)</th>
 											<th>Status</th>
 											<th>P/L ($)</th>
@@ -104,26 +115,85 @@ require 'connect-db.php'
 															<td><?= $row['home_team']; ?></td>
 															<td><?= $row['away_team']; ?></td>
 															<td><?= $row['homeSpread']; ?></td>
+															<td><?= $row['awaySpread']; ?></td>
 															<td><?= $row['over_under']; ?></td>
 															<td><?= $row['homeMoneyline']; ?></td>
+															<td><?= $row['awayMoneyline']; ?></td>
 															<td><?= $row['game_date']; ?></td>
 
 															<!-- TODO: conditional to get existing bet -->
 															<!-- Format with existing bet -->
 
 															<!-- If pending -->
-															<!-- <td>9</td>
+															<!-- 
+															<td>Over</td>
+															<td>9</td>
 															<td>wagered</td>
 															<td> ? </td> -->
 															<!-- If bet is resolved -->
-															<!-- <td>9</td>
+															<!--
+															<td>Under</td> 
+															<td>9</td>
 															<td>won or lost</td>
 															<td> some_$ </td> -->
 
 															<!-- Form to Create a bet / Display a bet starts here -->
-															<form action="place-bet.php" method="post">
+															<form action="place-bet.php" method="POST">
 																<td>
-																	<input type="number" step="1.00" class="form-control" id="floatingInput" placeholder="0.00" required style="width: 100px;">
+																	<div class="form-group">
+																		<div class="dropdown">
+																			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																				Select an option
+																			</button>
+																			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+																			<a class="dropdown-item" href="#" data-value="Option 1" onclick="setDropdownText(this)">Option 1
+																				<select style="display:none;">
+																					<option>Home Spread</option>
+																				</select>
+																			</a>
+																			<a class="dropdown-item" href="#" data-value="Option 2" onclick="setDropdownText(this)">Option 2
+																				<select style="display:none;">
+																					<option>Away Spread</option>
+																				</select>
+																			</a>
+																			<a class="dropdown-item" href="#" data-value="Option 3" onclick="setDropdownText(this)">Option 3
+																				<select style="display:none;">
+																					<option>Home Moneyline</option>
+																				</select>
+																			</a>
+																			<a class="dropdown-item" href="#" data-value="Option 4" onclick="setDropdownText(this)">Option 4
+																				<select style="display:none;">
+																					<option>Away Moneyline</option>
+																				</select>
+																			</a>
+																			<a class="dropdown-item" href="#" data-value="Option 5" onclick="setDropdownText(this)">Option 5
+																				<select style="display:none;">
+																					<option>Over</option>
+																				</select>
+																			</a>
+																			<a class="dropdown-item" href="#" data-value="Option 6" onclick="setDropdownText(this)">Option 6
+																				<select style="display:none;">
+																					<option>Under</option>
+																				</select>
+																			</a>
+																			</div>
+																		</div>
+																		<input type="hidden" name="selectedOption" id="selectedOption" required>
+																	</div>
+
+																	<script>
+																		function setDropdownText(el) {
+																			var text = el.getAttribute("data-value");
+																			document.getElementById("dropdownMenuButton").innerText = text;
+																			document.getElementById("selectedOption").value = text;
+																		}
+																	</script>
+																</td>
+
+																<td>
+																	<div class="form-group">
+																		<input type="number" step="1.00" class="form-control" id="floatingInput" name="wager_amount" placeholder="0.00" required style="width: 100px;">
+																	</div>
 																</td>
 																<td>
 																	<input type="submit" name="place" value="Place Bet" class="btn btn-primary" />
