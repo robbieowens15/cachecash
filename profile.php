@@ -40,10 +40,10 @@ $friends = getFriends($db, $user);
 
 <div class="container d-flex justify-content-center mt-5">
 
-	<div class="card">
-		
+	<div class="card-profile">
+
 		<div class="top-container">
-			
+
 			<div class="ml-3">
             <?php
             foreach ($profile as $running_variable):
@@ -57,7 +57,7 @@ $friends = getFriends($db, $user);
 
 		<div class="middle-container d-flex justify-content-between align-items-center mt-3 p-2">
 				<div class="dollar-div px-3">
-				
+
 
 				</div>
 				<div class="d-flex flex-column text-right mr-2">
@@ -80,7 +80,7 @@ $friends = getFriends($db, $user);
         ?>
 		<tr>
         <td><?php echo $running_variable['username']; ?></td> <td><?php echo $running_variable['email']; ?></td> 
-            
+
 		</tr>
 <?php endforeach; ?>
 	</div>

@@ -37,13 +37,7 @@ ul {
 	margin-right: auto;
 	width: 50%;
   }
-  .center {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	width: 50%;
-  }
-.card{
+.card-profile{
 	background-color: #fff;
 	width: 50%;
 	border-radius: 33px;
@@ -74,7 +68,7 @@ ul {
 .middle-container{
 	background-color: #eee;
 	border-radius: 12px;
-
+	display: inline;
 }
 .middle-container:hover {
 	border: 1px solid #05AF50;

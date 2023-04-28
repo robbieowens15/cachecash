@@ -11,7 +11,6 @@ require 'connect-db.php';
 	function numGames($db) {
 		$sql = "SELECT league, COUNT(*) AS count FROM games GROUP BY league";
 		$stmt = $db->prepare($sql);
-
 		$stmt->execute();
 		$leagues = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		return $leagues;

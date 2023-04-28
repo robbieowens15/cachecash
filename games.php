@@ -67,39 +67,49 @@ require 'connect-db.php'
 										</tr>
 									</thead>
 									<tbody>
-										<?php
+									<?php
 											// $con = mysqli_connect("localhost:3306","root","Wahoos4750","CacheCash");
 											if(isset($_GET['from_date']) && isset($_GET['to_date']))
 											{
 												$from_date = $_GET['from_date'];
 												$to_date = $_GET['to_date'];
+											}
+											else {
+												$first_game_sql = "SELECT * FROM games ORDER BY game_date LIMIT 1";
+												$stmt = $db->prepare($first_game_sql);
+												$stmt->execute();
+												$from_date = $stmt->fetch(PDO::FETCH_ASSOC)['game_date'];
+
+												$last_game_sql = "SELECT * FROM games ORDER BY game_date DESC LIMIT 1";
+												$stmt2 = $db->prepare($last_game_sql);
+												$stmt2->execute();
+												$to_date = $stmt2->fetch(PDO::FETCH_ASSOC)['game_date'];
+											}
 
 												// $query = "SELECT * FROM games WHERE game_date BETWEEN '$from_date' AND '$to_date'";
 												// $query_run = mysqli_query($con, $query);
-												$sql = "SELECT * FROM games WHERE game_date BETWEEN '$from_date' AND '$to_date' ORDER BY game_date";
-												$stmt = $db->prepare($sql);
-												$stmt->execute();
-												$games = $stmt->fetchAll(PDO::FETCH_ASSOC);
-												echo $games;
-												if($stmt->rowCount() > 0)
-												{
-													foreach($games as $row):?>
-														<tr>
-															<td><?= $row['league']; ?></td>
-															<td><?= $row['home_team']; ?></td>
-															<td><?= $row['away_team']; ?></td>
-															<td><?= $row['homeSpread']; ?></td>
-															<td><?= $row['over_under']; ?></td>
-															<td><?= $row['homeMoneyline']; ?></td>
-															<td><?= $row['game_date']; ?></td>
-														</tr>
-													<?php
-													endforeach;
-												}
-												else
-												{
-													echo "No Record Found";
-												}
+											$sql = "SELECT * FROM games WHERE game_date BETWEEN '$from_date' AND '$to_date' ORDER BY game_date DESC";
+											$stmt3 = $db->prepare($sql);
+											$stmt3->execute();
+											$games = $stmt3->fetchAll(PDO::FETCH_ASSOC);
+											if($stmt3->rowCount() > 0)
+											{
+												foreach($games as $row):?>
+													<tr>
+														<td><?= $row['league']; ?></td>
+														<td><?= $row['home_team']; ?></td>
+														<td><?= $row['away_team']; ?></td>
+														<td><?= $row['homeSpread']; ?></td>
+														<td><?= $row['over_under']; ?></td>
+														<td><?= $row['homeMoneyline']; ?></td>
+														<td><?= $row['game_date']; ?></td>
+													</tr>
+												<?php
+												endforeach;
+											}
+											else
+											{
+												echo "No Record Found";
 											}
 													?>
 									</tbody>

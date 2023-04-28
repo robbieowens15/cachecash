@@ -34,10 +34,10 @@
 ////////////////////////////////////////////
 
 /** S23, PHP (on GCP, local XAMPP, or CS server) connect to MySQL (on local XAMPP) **/
-// $username = 'your-username';
-// $password = 'your-password';
+// $username = 'root';
+// $password = '';
 // $host = 'localhost:3306';           // default phpMyAdmin port = 3306
-// $dbname = 'your-database-name';
+// $dbname = 'cachecash';
 // $dsn = "mysql:host=$host;dbname=$dbname";  
 ////////////////////////////////////////////
 
