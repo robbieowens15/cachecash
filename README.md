@@ -13,3 +13,14 @@ Backend Development, setup SQL Table with basic functionality
 Project Final Deliverable | 5/1
 -> https://www.cs.virginia.edu/~up3f/cs4750/project/index.html#!/finalprj
 SHOW CACHE CASH IN ALL ITS GLORY
+
+# Bugs and Incomplete Features
+- On login to ono-existent account, no error msg
+- On account creation, route to log in, not default homepage
+- Games renders strange *Maybe just Robbie's local*
+- Not logged in & purchase cachecache = 404
+- Games page should display all games, without an applied filter on first press
+
+
+# Others
+- On friend added, why background no load?
