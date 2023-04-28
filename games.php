@@ -64,6 +64,9 @@ require 'connect-db.php'
 											<th>Over/Under</th>
 											<th>Home Moneyline</th>
 											<th>Date</th>
+											<th>Wager ($)</th>
+											<th>Status</th>
+											<th>P/L ($)</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -88,29 +91,55 @@ require 'connect-db.php'
 
 												// $query = "SELECT * FROM games WHERE game_date BETWEEN '$from_date' AND '$to_date'";
 												// $query_run = mysqli_query($con, $query);
-											$sql = "SELECT * FROM games WHERE game_date BETWEEN '$from_date' AND '$to_date' ORDER BY game_date DESC";
-											$stmt3 = $db->prepare($sql);
-											$stmt3->execute();
-											$games = $stmt3->fetchAll(PDO::FETCH_ASSOC);
-											if($stmt3->rowCount() > 0)
-											{
-												foreach($games as $row):?>
-													<tr>
-														<td><?= $row['league']; ?></td>
-														<td><?= $row['home_team']; ?></td>
-														<td><?= $row['away_team']; ?></td>
-														<td><?= $row['homeSpread']; ?></td>
-														<td><?= $row['over_under']; ?></td>
-														<td><?= $row['homeMoneyline']; ?></td>
-														<td><?= $row['game_date']; ?></td>
-													</tr>
-												<?php
-												endforeach;
-											}
-											else
-											{
-												echo "No Record Found";
-											}
+												$sql = "SELECT * FROM games WHERE game_date BETWEEN '$from_date' AND '$to_date' ORDER BY game_date";
+												$stmt = $db->prepare($sql);
+												$stmt->execute();
+												$games = $stmt->fetchAll(PDO::FETCH_ASSOC);
+												echo $games;
+												if($stmt->rowCount() > 0)
+												{
+													foreach($games as $row):?>
+														<tr>
+															<td><?= $row['league']; ?></td>
+															<td><?= $row['home_team']; ?></td>
+															<td><?= $row['away_team']; ?></td>
+															<td><?= $row['homeSpread']; ?></td>
+															<td><?= $row['over_under']; ?></td>
+															<td><?= $row['homeMoneyline']; ?></td>
+															<td><?= $row['game_date']; ?></td>
+
+															<!-- TODO: conditional to get existing bet -->
+															<!-- Format with existing bet -->
+
+															<!-- If pending -->
+															<!-- <td>9</td>
+															<td>wagered</td>
+															<td> ? </td> -->
+															<!-- If bet is resolved -->
+															<!-- <td>9</td>
+															<td>won or lost</td>
+															<td> some_$ </td> -->
+
+															<!-- Form to Create a bet / Display a bet starts here -->
+															<form action="place-bet.php" method="post">
+																<td>
+																	<input type="number" step="1.00" class="form-control" id="floatingInput" placeholder="0.00" required style="width: 100px;">
+																</td>
+																<td>
+																	<input type="submit" name="place" value="Place Bet" class="btn btn-primary" />
+																</td>
+																<td> - </td>
+															</form>
+															<!-- ENDS HERE -->
+														</tr>
+													<?php
+													endforeach;
+												}
+												else
+												{
+													echo "No Record Found";
+												}
+											
 													?>
 									</tbody>
 								</table>
