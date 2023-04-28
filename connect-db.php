@@ -4,11 +4,11 @@
 
 /** S23, PHP (on Google Standard App Engine) connect to MySQL instance (GCP) **/
 // $username = 'root';                       // or your username
-// $password = 'Wahoos4750';
-// $host = 'cachecash-381521:us-east4:cache-instance';       // e.g., 'cs4750:us-east4:db-demo'; 
-// $dbname = 'CacheCash';           // e.g., 'guestbook';
-// $dsn = "mysql:unix_socket=/cloudsql/cachecash-381521:us-east4:cache-instance;dbname=CacheCash";
-      // e.g., "mysql:unix_socket=/cloudsql/cs4750:us-east4:db-demo;dbname=guestbook";
+// $password = 'your-root-password';     
+// $host = 'instance-connection-name';       // e.g., 'cs4750:us-east4:db-demo'; 
+// $dbname = 'your-database-name';           // e.g., 'guestbook';
+// $dsn = "mysql:unix_socket=/cloudsql/instance-connection-name;dbname=your-database-name";
+//       e.g., "mysql:unix_socket=/cloudsql/cs4750:us-east4:db-demo;dbname=guestbook";
 // --------- to test, include app.yaml with the following code
 // runtime: php74
 // entrypoint: serve connect-db.php
@@ -18,11 +18,11 @@
 
 /** S23, PHP (on local XAMPP or CS server) connect to MySQL instance (GCP) **/
 // $username = 'root';
-// $password = 'your-root-password';
-// $host = 'instance-connection-name';       // e.g., 'cs4750:us-east4:db-demo'; 
-// $dbname = 'your-database-name;;           // e.g., 'guestbook';
-// $dsn = "mysql:host=your-SQL-public-IP-address;dbname=your-database-name";   // connect PHP (XAMPP) to DB (GCP)
-//       e.g., "mysql:host=99.99.999.99;dbname=$dbname";   
+// $password = 'password';
+// $host = 'cs4750db-376603:us-east4:db-demo';       // e.g., 'cs4750:us-east4:db-demo'; 
+// $dbname = 'friendbook';           // e.g., 'guestbook';
+// $dsn = "mysql:host=35.245.194.201;dbname=friendbook";   // connect PHP (XAMPP) to DB (GCP)
+//       e.g., "mysql:host=99.99.999.99;dbname=$dbname";    
 
 // to get public IP addres of the SQL instance, go to GCP SQL overview page
 
