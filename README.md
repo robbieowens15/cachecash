@@ -20,6 +20,7 @@ SHOW CACHE CASH IN ALL ITS GLORY
 - Games renders strange *Maybe just Robbie's local*
 - Not logged in & purchase cachecache = 404
 - Games page should display all games, without an applied filter on first press
+- profile balance displays as int not 2 decimal point float
 
 
 # Others

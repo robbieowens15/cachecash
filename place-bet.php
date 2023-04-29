@@ -69,28 +69,37 @@
                     echo var_dump($teams);
 
                     $team = NULL; //default for OVER UNDER
+                    $type = NULL;
                     if ($_POST['selectedOption'] == "Away Moneyline" OR $_POST['selectedOption'] == "Away Spread"){
                         $team = $teams[0]['away_team'];
+                        if ($_POST['selectedOption'] == "Away Moneyline") {
+                            $type = "Moneyline";
+                        } else {
+                            $type = "Spread";
+                        }
                     } else if ($_POST['selectedOption'] == "Home Moneyline" OR $_POST['selectedOption'] == "Home Spread") {
                         $team = $teams[0]['home_team'];
+                        if ($_POST['selectedOption'] == "Home Moneyline") {
+                            $type = "Moneyline";
+                        } else {
+                            $type = "Spread";
+                        }
+                    }
+                    if ($type == NULL) {
+                        $type = "OverUnder";
                     }
                     echo "Selected the team: " . $team . "\n";
-
+                    echo "Enum Bet Type: " . $type . "\n";
 
                     //Add new bet
-                    $query_place_bet = "INSERT INTO 
+                    $user_id = intval($user_tuple[0]['id']);
+                    $game_id = intval($_POST['game_id']);
+                    $wager = floatval($_POST['wager_amount']);
+
+                    $sql = "INSERT INTO 
                         bets(account_id, game_id, team, wager, bet_type, active) 
-                        VALUES (:account_id, :game_id, :team, :wager, :bet_type, True)";
-                    echo $query_place_bet;
-                    $statement = $db->prepare($query_place_bet);
-                    $statement->bindValue(':account_id', $user_tuple[0]['id']);
-                    $statement->bindValue(':game_id', $_POST['game_id']);
-                    $statement->bindValue(':team', $team);
-                    $statement->bindValue(':wager', floatval($_POST['wager_amount']));
-                    $statement->bindValue(':bet_type', $_POST['selectedOption']);
-                    echo $statement;
-                    $statement->execute();
-                    $statement->closeCursor();
+                        VALUES ($user_id, $game_id, '$team', $wager, '$type', True)";
+                    $db->exec($sql);
                     echo "Successful Bet placed!";
                 }
                 echo '</pre>';
