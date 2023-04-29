@@ -80,7 +80,6 @@ function getBets($db, $user) {
 											<th>Bet Type</th>
 											<th>Wager ($)</th>
 											<th>Status</th>
-											<th>P/L ($)</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -124,22 +123,6 @@ function getBets($db, $user) {
 															<td><?= $row['awayMoneyline']; ?></td>
 															<td><?= $row['game_date']; ?></td>
 
-															<!-- TODO: conditional to get existing bet -->
-															<!-- Format with existing bet -->
-
-															<!-- If pending -->
-															<!-- 
-															<td>Over</td>
-															<td>9</td>
-															<td>wagered</td>
-															<td> ? </td> -->
-															<!-- If bet is resolved -->
-															<!--
-															<td>Under</td> 
-															<td>9</td>
-															<td>won or lost</td>
-															<td> some_$ </td> -->
-
 															<!-- Form to Create a bet / Display a bet starts here -->
 															<form action="place-bet.php" method="POST">
 																<td>
@@ -154,7 +137,7 @@ function getBets($db, $user) {
 																	<option value="Under">Under</option>
 																</select>
 																</div>
-													</td>
+																</td>
 
 																<td>
 																	<div class="form-group">
@@ -170,8 +153,6 @@ function getBets($db, $user) {
 																<input type="hidden" name="game_id" value="<?=  $row['game_id'] ?>" />
 														
 														</form> 
-														
-														<td> NA </td>
 														<!-- ENDS HERE -->
 														</tr>
 													<?php
