@@ -27,14 +27,13 @@ function getBets($db, $user) {
   }
 </style>
 <img style="width: 20%;" src="img/cachecash.png" class="center">
+
+
 <body>
-	<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-12">
-					<div class="card mt-5">
-						<div class="card-header">
-							<h4>View Games by Date</h4>
-						</div>
+		<h4 class="center">View Games by Date</h4>
+			<form action="" method="GET">
+				<div class="row">
+					<div class="col-md-4">
 						<div class="card-bodyyy">
 							<form action="" method="GET">
 								<div class="row">
@@ -59,10 +58,14 @@ function getBets($db, $user) {
 								</div>
 							</form>
 						</div>
+					</div>
+				</div>
+			</form>
+		</div>
 
 						<div class="card mt-4">
 							<div class="card-body">
-								<table class="table table-borderd">
+								<table class="table table-borderd" style="width:100%;">
 									<thead>
 										<tr>
 											<th>League</th>
@@ -182,6 +185,7 @@ function getBets($db, $user) {
 													?>
 									</tbody>
 								</table>
+								
 							</div>
 						</div>
 					</div>
