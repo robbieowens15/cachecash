@@ -35,7 +35,7 @@ function getBets($db, $user) {
 						<div class="card-header">
 							<h4>View Games by Date</h4>
 						</div>
-						<div class="card-body">
+						<div class="card-bodyyy">
 							<form action="" method="GET">
 								<div class="row">
 									<div class="col-md-4">
@@ -87,6 +87,7 @@ function getBets($db, $user) {
 											{
 												$from_date = $_GET['from_date'];
 												$to_date = $_GET['to_date'];
+	
 											}
 											else {
 												$first_game_sql = "SELECT * FROM games ORDER BY game_date LIMIT 1";
@@ -106,7 +107,6 @@ function getBets($db, $user) {
 												$stmt = $db->prepare($sql);
 												$stmt->execute();
 												$games = $stmt->fetchAll(PDO::FETCH_ASSOC);
-												echo $games;
 												if($stmt->rowCount() > 0)
 												{
 													foreach($games as $row):?>
@@ -141,53 +141,17 @@ function getBets($db, $user) {
 															<form action="place-bet.php" method="POST">
 																<td>
 																<div class="form-group">
-																	<div class="dropdown">
-																		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-																			Select an option
-																		</button>
-																		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-																		<a class="dropdown-item" href="#" data-value="Home Spread" onclick="setDropdownText(this)">Home Spread
-																			<select style="display:none;">
-																				<option>Home Spread</option>
-																			</select>
-																		</a>
-																		<a class="dropdown-item" href="#" data-value="Away Spread" onclick="setDropdownText(this)">Away Spread
-																			<select style="display:none;">
-																				<option>Away Spread</option>
-																			</select>
-																		</a>
-																		<a class="dropdown-item" href="#" data-value="Home Moneyline" onclick="setDropdownText(this)">Home Moneyline
-																			<select style="display:none;">
-																				<option>Home Moneyline</option>
-																			</select>
-																		</a>
-																		<a class="dropdown-item" href="#" data-value="Away Moneyline" onclick="setDropdownText(this)">Away Moneyline
-																			<select style="display:none;">
-																				<option>Away Moneyline</option>
-																			</select>
-																		</a>
-																		<a class="dropdown-item" href="#" data-value="Over" onclick="setDropdownText(this)">Over
-																			<select style="display:none;">
-																				<option>Over</option>
-																			</select>
-																		</a>
-																		<a class="dropdown-item" href="#" data-value="Under" onclick="setDropdownText(this)">Under
-																			<select style="display:none;">
-																				<option>Under</option>
-																			</select>
-																		</a>
-																		</div>
-																	</div>
-																	<input type="hidden" name="selectedOption" id="selectedOption" required>
+																<select class="form-control" name="selectedOption" id="selectedOption" required style="width:200px;">
+																	<option value="">Select a league</option>
+																	<option value="Home Moneyline">Home Moneyline</option>
+																	<option value="Home Spread">Home Spread</option>
+																	<option value="Away Moneyline">Away Moneyline</option>
+																	<option value="Away Spread">Away Spread</option>
+																	<option value="Over">Over</option>
+																	<option value="Under">Under</option>
+																</select>
 																</div>
-																</td>
-																<script>
-																	function setDropdownText(el) {
-																		var text = el.getAttribute("data-value");
-																		document.getElementById("dropdownMenuButton").innerText = text;
-																		document.getElementById("selectedOption").value = text;
-																	}
-																</script>
+													</td>
 
 																<td>
 																	<div class="form-group">
@@ -196,15 +160,13 @@ function getBets($db, $user) {
 																</td>
 
 																<td>
-																	<input type="submit" class="btn btn-primary" />
+																	<input type="submit" class="btn btn-primary"/>
 																</td>
 																
 																<!-- Pass to form processing (place-bet.php), but do not take input! -->
 																<input type="hidden" name="game_id" value="<?=  $row['game_id'] ?>" />
-																<input type="hidden" name="username" value="<?=  $_SESSION['name'] ?>" />
-																<input type="hidden" name="db" value="<?= $db ?>" />
-																<input type="hidden" name="redirect_uri" value="<?= "://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']; ?>" />
-														</form>
+														
+														</form> 
 														
 														<td> NA </td>
 														<!-- ENDS HERE -->
