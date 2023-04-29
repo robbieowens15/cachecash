@@ -8,7 +8,12 @@
 <?php
 include 'connect-db.php';
 include 'navbar.php';
-require 'connect-db.php';
+
+
+if(!isset($_SESSION['name'])){
+    echo '<script>alert("Please log in to access"); window.location.href = "/cachecash/homescreen.php";</script>';
+}
+
 $user = $_SESSION['name'];
 ?>
 <head>

@@ -7,13 +7,11 @@
 require 'connect-db.php';
 include 'navbar.php';
 
-if (!isset($_POST['username'], $_POST['password'], $_POST['email'], $_POST['age'])) {
-	exit('Please complete the registration form!');
-}
 
 if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['email']) || empty($_POST['age'])) {
-	exit('Please complete the registration form');
+    echo '<script>alert("Please fill out the entire registration form"); window.location.href = "/cachecash/homescreen.php";</script>';
 }
+
 
 $user = $_POST['username'];
 $pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -37,21 +35,15 @@ function createNewUser($db, $user, $pass, $em, $age) {
     $db->exec($sql);
 }
 
-$bad = False;
 foreach ($userCheck as $running_variable): 
     if ($running_variable['username'] == $_POST['username']){
-        echo 'Username already exists.';
-        $bad = True;
-    ?>
-    <a class="btn btn-primary" href="/cachecash/login.php" role="button">Back to Register</a>
-    <?php
+        echo '<script>alert("That username already exists"); window.location.href = "/cachecash/login.php";</script>';
+        exit;
     }
 endforeach; 
 
-if (!$bad){
-    createNewUser($db, $user, $pass, $em, $age); 
-    ?>
-    <a class="btn btn-primary" href="/cachecash/homescreen.php" role="button">Back to Home to Login</a>
-    <?php
-}
+
+createNewUser($db, $user, $pass, $em, $age); 
+header('Location: /cachecash/login.php?created=yes');
+
 ?>

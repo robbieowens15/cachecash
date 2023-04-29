@@ -8,7 +8,21 @@
 include 'navbar.php';
 require 'connect-db.php';
 
-$user = $_SESSION['name'];
+if(!isset($_SESSION['name'])){
+    echo '<script>alert("Please log in to access"); window.location.href = "/cachecash/homescreen.php";</script>';
+}
+
+
+
+if(isset($_GET['prof'])){
+    $user = $_GET['prof']; 
+}
+else{
+    $user = $_SESSION['name'];
+}
+
+
+
 function getUserInfo($db, $user) {
     $sql = "SELECT username, email, balance, age FROM accounts WHERE username='$user'";
     $stmt = $db->prepare($sql);
@@ -25,8 +39,19 @@ function getFriends($db, $user) {
     return $userInfo;
 }
 
+function getBets($db, $user) {
+    $sql = "SELECT team, wager, bet_type, active, result FROM bets WHERE account_id=(SELECT id from accounts WHERE username='$user')";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    $bets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $bets;
+}
+
 $profile = getUserInfo($db, $user);
 $friends = getFriends($db, $user);
+$bets = getBets($db, $user);
+
+
 ?>
 
 
@@ -65,11 +90,11 @@ $friends = getFriends($db, $user);
 					<span class="amount"><span class="dollar-sign">$</span><?php echo $running_variable['balance']; ?></span>
                 </div>
 		</div>
-
+        <div class="recent-border mt-4" style="display: flex; flex-direction: column;">
 		<div class="recent-border mt-4">
-			<span class="recent-orders">Friends</span>
+            <button class="recent-orders" onclick="toggleTable()">Friends &#9660;</button>
 		</div>
-        <table class="table table-bordered" style="width:100%">
+        <table id="friends" class="table table-bordered" style="display: none;">
         <thead>
             <th width="50%">Username
             <th width="50%">Email
@@ -83,6 +108,53 @@ $friends = getFriends($db, $user);
 
 		</tr>
 <?php endforeach; ?>
+        
+<div class="recent-border mt-4">
+                    <button id="bets" class="recent-orders" onclick="toggleTableBets()">Bets &#9660;</button>
+                </div>
+                <table id="betsTable" class="table table-bordered" style="display: none;">
+                <thead>
+                    <th width="20%">Team
+                    <th width="20%">Wager
+                    <th width="20%">Amount
+                    <th width="20%">Active
+                    <th width="20%">Result
+                </tr>
+                </thead>
+                <?php
+                foreach ($bets as $running_variable2):
+                ?>
+                <tr>
+                <td><?php echo $running_variable2['team']; ?></td> 
+                <td><?php echo $running_variable2['wager']; ?></td> 
+                <td><?php echo $running_variable2['bet_type']; ?></td> 
+                <td><?php echo $running_variable2['active']; ?></td> 
+                <td><?php echo $running_variable2['result']; ?></td> 
+
+                </tr>
+<?php endforeach; ?>
 	</div>
 </div>
 
+<script>
+function toggleTable() {
+  var table = document.getElementById("friends");
+  if (table.style.display === "none") {
+    table.style.display = "table";
+    var betsButton = document.getElementById("bets").parentNode;
+    betsButton.parentNode.insertBefore(table, betsButton);
+  } else {
+    table.style.display = "none";
+  }
+}
+
+  function toggleTableBets() {
+    var table = document.getElementById("betsTable");
+    if (table.style.display === "none") {
+      table.style.display = "table";
+    } else {
+      table.style.display = "none";
+    }
+  }
+</script>
+</div>

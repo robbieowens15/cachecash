@@ -5,19 +5,26 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <body>
-        <h2>Form Processing Debug Output:</h2>
             <?php
                 require 'connect-db.php';
                 include 'navbar.php';
                 $prof = $_GET['prof'];
                 $user = $_SESSION['name'];
 
-                echo '<pre>';
+                // echo '<pre>';
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     // process form data and generate output
-                    echo "Post Request info\n";
-                    var_dump($_POST);
+                    // echo "Post Request info\n";
+                    // var_dump($_POST);
                     place_bet();
+                }
+
+
+                function updateBalance($db, $user, $val){
+                    $val = floatval($val);
+                    $sql = "UPDATE accounts SET balance = balance - $val WHERE username = '$user'";
+                    $stmt = $db->prepare($sql);
+			        $stmt->execute();
                 }
 
                 // function place_bet($db, $game_id, $bet_type, $wager){
@@ -30,8 +37,8 @@
                     $statement->bindValue(':username', $_SESSION['name']);
                     $statement->execute();
                     $user_tuple = $statement->fetchAll(PDO::FETCH_ASSOC);
-                    echo "User Attributes: ";
-                    echo var_dump($user_tuple);
+                    // echo "User Attributes: ";
+                    // echo var_dump($user_tuple);
                     $statement->closeCursor();
 
                     //Check if user already bet on this game
@@ -47,15 +54,15 @@
                     $statement->bindValue(':game_id', $_POST['game_id']);
                     $statement->execute();
                     $has_bet = $statement->fetchAll(PDO::FETCH_ASSOC);
-                    echo "User has bet?";
-                    echo var_dump($has_bet);
+                    // echo "User has bet?";
+                    // echo var_dump($has_bet);
                     if ($has_bet[0]["result"] == 1) {
-                        echo "<h1>Already bet on this game</h1>";
+                        echo '<script>alert("Already bet on this game"); window.location.href = "/cachecash/games.php";</script>';
                     }
 
                     // Check if user has enough money
                     if ($user_tuple[0]['balance'] < floatval($_POST['wager_amount'])) {
-                        echo "<h1>Error Balance is too low</h1>";
+                        echo '<script>alert("Insufficient CacheCash"); window.location.href = "/cachecash/games.php";</script>';
                     }
 
                     //Get the game the user want to bet on
@@ -65,8 +72,8 @@
                     $statement->execute();
                     $teams = $statement->fetchAll(PDO::FETCH_ASSOC);
                     $statement->closeCursor();
-                    echo "Teams: ";
-                    echo var_dump($teams);
+                    // echo "Teams: ";
+                    // echo var_dump($teams);
 
                     $team = NULL; //default for OVER UNDER
                     $type = NULL;
@@ -88,8 +95,8 @@
                     if ($type == NULL) {
                         $type = "OverUnder";
                     }
-                    echo "Selected the team: " . $team . "\n";
-                    echo "Enum Bet Type: " . $type . "\n";
+                    //echo "Selected the team: " . $team . "\n";
+                    //echo "Enum Bet Type: " . $type . "\n";
 
                     //Add new bet
                     $user_id = intval($user_tuple[0]['id']);
@@ -100,9 +107,12 @@
                         bets(account_id, game_id, team, wager, bet_type, active) 
                         VALUES ($user_id, $game_id, '$team', $wager, '$type', True)";
                     $db->exec($sql);
-                    echo "Successful Bet placed!";
+
+                    updateBalance($db, $_SESSION['name'], $wager);
+                    header('Location: /cachecash/games.php?bet=yes');
+                    //echo "Successful Bet placed!";
                 }
-                echo '</pre>';
+               // echo '</pre>';
             ?>
     </body>
 </html>

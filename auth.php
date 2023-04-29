@@ -14,6 +14,18 @@ if ( !isset($_POST['username'], $_POST['password']) ) {
 
 $user = $_POST['username'];
 
+function checkUserExists($db, $user){
+    $sql = "SELECT COUNT(username) as c FROM accounts WHERE username='$user'";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    $iunno = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $iunno;
+}
+
+if (checkUserExists($db, $user)[0]['c'] == "0"){
+    echo '<script>alert("That username does not exist"); window.location.href = "/cachecash/login.php";</script>';
+}
+
 function checkPassword($db, $user) {    
     
     $sql = "SELECT id, password FROM accounts WHERE username='$user'";
@@ -34,11 +46,7 @@ if (password_verify($_POST['password'], $running_variable['password'])){
     header('Location: /cachecash/homescreen.php');
 }
 else{
-    echo 'Incorrect username and/or password!';
-    ?>
-    <div></div>
-    <a class="btn btn-primary" href="/cachecash/homescreen.php" role="button">Back to Home</a>
-    <?php
+    echo '<script>alert("Incorrect password"); window.location.href = "/cachecash/login.php";</script>';
 }
 endforeach; ?>
 

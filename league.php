@@ -34,13 +34,16 @@
 <img style="width: 20%;" src="img/cachecash.png" class="center">
 <h4 style="text-align:center;"> <?php echo $league . " Games" ?> </h4>
 <div class="row justify-content-center">
-<table class="table table-bordered" style="width:70%">
+<table class="table table-bordered" style="width:85%">
   <thead>
-    <th width="20%">Home Team
-    <th width="20%">Away Team
-	<th width="20%">Home Team Spread
-    <th width="20%">Over/Under
-	<th width="20%">Home Moneyline
+    <th width="16%">Home Team
+    <th width="16%">Away Team
+	<th width="10%">Home Team Spread
+	<th width="10%">Away Team Spread
+    <th width="10%">Over/Under
+	<th width="10%">Home Moneyline
+	<th width="10%">Away Moneyline
+	<th width="30%" >Bet
   </tr>
   </thead>
 <?php foreach ($leagueGames as $running_variable): ?>
@@ -48,8 +51,11 @@
      <td><?php echo $running_variable['home_team']; ?></td>
 	 <td><?php echo $running_variable['away_team']; ?></td>
 	 <td><?php echo $running_variable['homeSpread']; ?></td>
+	 <td><?php echo $running_variable['awaySpread']; ?></td>
 	 <td><?php echo $running_variable['over_under']; ?></td>
 	 <td><?php echo $running_variable['homeMoneyline']; ?></td>
+	 <td><?php echo $running_variable['awayMoneyline']; ?></td>
+	 <td><a class="btn btn-primary" href="/cachecash/games.php" role="button">Bet on this Game</a>
   </tr>
 <?php endforeach; ?>
 </table>

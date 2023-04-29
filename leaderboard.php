@@ -53,16 +53,22 @@ if($_GET['added']=="yes"){
   </tr>
   </thead>
 <?php
+
 	foreach ($leaderboard as $running_variable):
 ?>
 		<tr>
-            <td><?php echo $running_variable['username']; ?></td>
+            <td><a href="<?php echo "/cachecash/profile.php?prof=" . $running_variable['username']; ?>"   ><?php echo $running_variable['username']; ?></a></td>
 			<td><?php echo $running_variable['balance']; ?></td>
             <td><?php 
             if ($running_variable['username'] != $_SESSION['name']){
                 if (!in_array($running_variable['username'], array_column($friendsAlready, "username"))){
-                    echo '<a class="btn btn-primary" role="button" href="/cachecash/addFriend.php?prof=' . $running_variable['username'] . '"> Add ' .  $running_variable['username'] . ' as Friend </a>';?></td>
-                <?php  
+                    if (isset($_SESSION['name'])){
+                        echo '<a class="btn btn-primary" role="button" href="/cachecash/addFriend.php?prof=' . $running_variable['username'] . '"> Add ' .  $running_variable['username'] . ' as Friend </a>';?></td>
+                   <?php 
+                    }
+                    else{
+                        echo "Please log in to add friends";
+                    }    
                 }
                 else{
                     echo "Already friends!";

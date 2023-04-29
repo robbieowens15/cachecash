@@ -8,7 +8,11 @@
 <?php
 include 'connect-db.php';
 include 'navbar.php';
-require 'connect-db.php';
+
+
+if(!isset($_SESSION['name'])){
+    echo '<script>alert("Please log in to access"); window.location.href = "/cachecash/homescreen.php";</script>';
+}
 
 function getBets($db, $user) {
     $sql = "SELECT username FROM accounts WHERE email IN (SELECT email_2 FROM friends WHERE email_1=(SELECT email from accounts WHERE username='$user'))";
@@ -16,6 +20,10 @@ function getBets($db, $user) {
     $stmt->execute();
     $f = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $f;
+}
+
+if($_GET['bet']=="yes"){
+    echo '<script>alert("Successfully placed bet!")</script>';
 }
 ?>
 <style>
@@ -27,7 +35,6 @@ function getBets($db, $user) {
   }
 </style>
 <img style="width: 20%;" src="img/cachecash.png" class="center">
-
 
 <body>
 		<h4 class="center">View Games by Date</h4>
@@ -141,7 +148,7 @@ function getBets($db, $user) {
 
 																<td>
 																	<div class="form-group">
-																		<input type="number" step="1.00" class="form-control" id="floatingInput" name="wager_amount" placeholder="0.00" required style="width: 100px;">
+																		<input type="number" step="any" min="0.01" step="0.01"class="form-control" id="floatingInput" name="wager_amount" placeholder="0.00" required style="width: 100px;">
 																	</div>
 																</td>
 
