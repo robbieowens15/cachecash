@@ -80,14 +80,14 @@
                     if ($_POST['selectedOption'] == "Away Moneyline" OR $_POST['selectedOption'] == "Away Spread"){
                         $team = $teams[0]['away_team'];
                         if ($_POST['selectedOption'] == "Away Moneyline") {
-                            $type = "Moneyline";
+                            $type = "Away_Moneyline";
                         } else {
                             $type = "Spread";
                         }
                     } else if ($_POST['selectedOption'] == "Home Moneyline" OR $_POST['selectedOption'] == "Home Spread") {
                         $team = $teams[0]['home_team'];
                         if ($_POST['selectedOption'] == "Home Moneyline") {
-                            $type = "Moneyline";
+                            $type = "Home_Moneyline";
                         } else {
                             $type = "Spread";
                         }

@@ -144,26 +144,22 @@ if (intval($admin[0]['admin'] != 1)){
         <td><?php echo $running_variable2['active']; ?></td> 
         <td>
 
-        <form action="updateBetResult.php" method="POST">
-														
-        <div class="form-group">
-        <select class="form-control" name="selectedOption" id="selectedOption" required style="width:200px;">
-            <option value="">Select an option</option>
-            <option value="Won">Won</option>
-            <option value="Lost">Lost</option>
-        </select>
-        </div>
-												
-        </td> 
-        
-        <td>
-        <button type="submit" class="btn btn-primary">Update</button>
-        	
+            <form action="updateBetResult.php" method="POST">
+                    <div class="form-group">
+                        <select class="form-control" name="selectedOption" id="selectedOption" required style="width:200px;">
+                            <option value="">Select an option</option>
+                            <option value="Won">Won</option>
+                            <option value="Lost">Lost</option>
+                        </select>
+                    </div>
         </td>
+                <td>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </td>
         </tr>
-        <input type="hidden" name="bet_num" value="<?php echo $running_variable2['bet_num'] ?>" />
-        <input type="hidden" name="game_id" value="<?php echo $running_variable2['game_id'] ?>" />
-        </form>
+                <input type="hidden" name="bet_num" value="<?php echo $running_variable2['bet_num'] ?>" />
+                <input type="hidden" name="game_id" value="<?php echo $running_variable2['game_id'] ?>" />
+            </form>
 <?php endforeach; ?>
 	</div>
 </div>

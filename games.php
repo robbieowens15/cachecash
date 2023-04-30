@@ -28,42 +28,41 @@ if($_GET['bet']=="yes"){
 ?>
 <style>
 	.center {
+	text-align: center;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-	width: 50%;
+	width: 20%;
+  }
+  form {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 70%;
   }
 </style>
 <img style="width: 20%;" src="img/cachecash.png" class="center">
 
 <body>
 		<h4 class="center">View Games by Date</h4>
-			<form action="" method="GET">
-				<div class="row">
-					<div class="col-md-4">
-						<div class="card-bodyyy">
-							<form action="" method="GET">
-								<div class="row">
-									<div class="col-md-4">
-										<div class="form-group">
-											<label>From Date</label>
-											<input type="date" name="from_date" value="<?php if(isset($_GET['from_date'])){ echo $_GET['from_date']; } ?>" class="form-control">
-										</div>
-									</div>
-									<div class="col-md-4">
-										<div class="form-group">
-											<label>To Date</label>
-											<input type="date" name="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } ?>" class="form-control">
-										</div>
-									</div>
-									<div class="col-md-4">
-										<div class="form-group">
-											<label>Click to Filter</label> <br>
-											<button type="submit" class="btn btn-primary">Filter</button>
-										</div>
-									</div>
-								</div>
-							</form>
+			<form class="form justify-content-center" action="" method="GET">
+				<div class="row justify-content-md-center">
+					<div class="col-lg-auto">
+						<div class="form-group">
+							<label>From Date</label>
+							<input type="date" name="from_date" value="<?php if(isset($_GET['from_date'])){ echo $_GET['from_date']; } ?>" class="form-control">
+						</div>
+					</div>
+					<div class="col-lg-auto">
+						<div class="form-group">
+							<label>To Date</label>
+							<input type="date" name="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } ?>" class="form-control">
+						</div>
+					</div>
+					<div class="col-lg-auto">
+						<div class="form-group">
+							<label>Click to Filter</label> <br>
+							<button type="submit" class="btn btn-primary">Filter</button>
 						</div>
 					</div>
 				</div>
@@ -96,7 +95,6 @@ if($_GET['bet']=="yes"){
 											{
 												$from_date = $_GET['from_date'];
 												$to_date = $_GET['to_date'];
-	
 											}
 											else {
 												$first_game_sql = "SELECT * FROM games ORDER BY game_date LIMIT 1";
@@ -155,11 +153,11 @@ if($_GET['bet']=="yes"){
 																<td>
 																	<input type="submit" class="btn btn-primary"/>
 																</td>
-																
+
 																<!-- Pass to form processing (place-bet.php), but do not take input! -->
 																<input type="hidden" name="game_id" value="<?=  $row['game_id'] ?>" />
-														
-														</form> 
+
+														</form>
 														<!-- ENDS HERE -->
 														</tr>
 													<?php
@@ -169,11 +167,10 @@ if($_GET['bet']=="yes"){
 												{
 													echo "No Record Found";
 												}
-											
+
 													?>
 									</tbody>
 								</table>
-								
 							</div>
 						</div>
 					</div>

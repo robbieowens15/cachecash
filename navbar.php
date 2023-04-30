@@ -14,6 +14,7 @@
 			<li><a href="https://cachecash-381521.uk.r.appspot.com/purchase.php">Purchase Cache Cash</a></li>
 			<?php /*
 			session_start();
+			date_default_timezone_set("America/New_York");
 			// Check if the user is logged in
 			if (!isset($_SESSION['loggedin'])) {
 				?>
@@ -45,6 +46,7 @@
 
 			<?php
 			session_start();
+			date_default_timezone_set("America/New_York");
 			// Check if the user is logged in
 			if (!isset($_SESSION['loggedin'])) {
 				?>
