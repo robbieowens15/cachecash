@@ -33,7 +33,68 @@ function getBets($db){
     return $admin;
 }
 
+function getBalanceSheet($db){
+    $sql = "SELECT bet_num, wager, team, bet_type, active, result, home_team, away_team, homeSpread, awaySpread, over_under, homeMoneyline, awayMoneyline FROM bets NATURAL JOIN games";
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $columns = array();
+
+    $running_active_wagers = 0.00;
+    $running_revenue = 0.00;
+    $running_liability = 0.00;
+
+    // Order of Array push determined by columns in table
+    foreach ($items as $bet):
+        $row = array();
+        array_push($row, $bet['bet_num']);
+
+        if ($bet['bet_type'] == 'Spread' OR $bet['bet_type'] == 'OverUnder'){
+            array_push($row, "-110");
+        } else if ($bet['team'] == $bet['away_team']) {
+            array_push($row, $bet['awayMoneyline']);
+        } else {
+            array_push($row, $bet['homeMoneyline']);
+        }
+
+        array_push($row, $bet['result']);
+        array_push($row, $bet['wager']);
+
+        // Revenue and Liability
+        $sql = "SELECT wager FROM house WHERE bet_num=:bet_number";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':bet_number', $bet['bet_num']);
+        $stmt->execute();
+        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($bet['active'] == 1) {
+            array_push($row, "-");
+            array_push($row, "-");
+            $running_active_wagers = $running_active_wagers + $bet['wager'];
+        } else if ($bet['result'] == "Won") {
+            $amnt = -1 * floatval($items[0]["wager"]);
+            $running_liability = $running_liability + $amnt;
+            array_push($row, 0); // liability
+            array_push($row, $amnt); // revenue
+        } else {
+            $amnt = -1 * floatval($items[0]["wager"]);
+            $running_revenue = $running_revenue + $amnt;
+            array_push($row, $amnt); //revenue
+            array_push($row, 0); //liability
+        }
+        array_push($columns, $row);
+
+    endforeach;
+
+    $balance_sheet = array();
+    array_push($balance_sheet, $columns, $running_active_wagers, $running_revenue, $running_liability);
+
+    return $balance_sheet;
+}
+
 $bets = getBets($db);
+$balanceSheetItems = getBalanceSheet($db);
 
 $admin = checkAdmin($db, $user);
 if (intval($admin[0]['admin'] != 1)){
@@ -162,6 +223,45 @@ if (intval($admin[0]['admin'] != 1)){
             </form>
 <?php endforeach; ?>
 	</div>
+
+<div class="container w-75 mt-5">
+    <button id="show-form-btn" onclick="toggleBalanceSheet()" class="btn btn-success">Display Balance Sheet</button>  
+        <table id="balanceSheetTable" class="table table-bordered" style="display: none;">
+        <thead>
+        <tr>
+            <th>Bet ID</th>
+            <th>Line</th>
+            <th>Status</th>
+            <th>Wager</th>
+            <th>Revenue</th>
+            <th>Liability</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        foreach ($balanceSheetItems[0] as $line):
+        ?>
+        <tr>
+            <td><?php echo $line[0]; ?></td> 
+            <td><?php echo $line[1]; ?></td> 
+            <td><?php echo $line[2]; ?></td> 
+            <td><?php echo $line[3]; ?></td> 
+            <td><?php echo $line[4]; ?></td> 
+            <td><?php echo $line[5]; ?></td> 
+        </tr>
+<?php endforeach; ?>
+    </tbody>
+    </table>
+
+    <h2> Summary Statistics: </h2>
+    <ul style="list-style-type:none;">
+            <li>Active Bet Deposits: $<?php echo $balanceSheetItems[1];?></li>
+            <li>Gross Revenue: $<?php echo $balanceSheetItems[2];?></li>
+            <li>Gross Liabilities: $<?php echo $balanceSheetItems[3];?></li>
+            <li>Net Profits: $<?php echo $balanceSheetItems[2] - $balanceSheetItems[3];?></li>
+    </ul>
+
+	</div>
 </div>
 </body>
 </html>
@@ -181,6 +281,15 @@ showFormButton.addEventListener('click', function() {
 
 function toggleTableBets() {
     var table = document.getElementById("betsTable");
+    if (table.style.display === "none") {
+      table.style.display = "table";
+    } else {
+      table.style.display = "none";
+    }
+  }
+
+function toggleBalanceSheet() {
+    var table = document.getElementById("balanceSheetTable");
     if (table.style.display === "none") {
       table.style.display = "table";
     } else {
