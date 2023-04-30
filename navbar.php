@@ -42,6 +42,7 @@
 			<li><a href="/cachecash/profile.php">Profile</a></li>
 			<li><a href="/cachecash/games.php">Games</a></li>
 			<li><a href="/cachecash/leaderboard.php">Leaderboard</a></li>
+			<li><a href="/cachecash/smacktalk.php">Smack Talk Arena</a></li>
 			<li><a href="/cachecash/purchase.php">Purchase Cache Cash</a></li>
 
 			<?php
