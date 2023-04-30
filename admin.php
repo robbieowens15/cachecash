@@ -78,7 +78,7 @@ function getBalanceSheet($db){
             array_push($row, 0); // liability
             array_push($row, $amnt); // revenue
         } else {
-            $amnt = -1 * floatval($items[0]["wager"]);
+            $amnt = floatval($items[0]["wager"]);
             $running_revenue = $running_revenue + $amnt;
             array_push($row, $amnt); //revenue
             array_push($row, 0); //liability
@@ -119,7 +119,7 @@ if (intval($admin[0]['admin'] != 1)){
 </style>
 <img style="width: 20%;" src="img/cachecash.png" class="center">
 <div class="container w-75 mt-5">
-        <button id="show-form-btn" class="btn btn-success">Add Game</button>
+        <button id="show-form-btn" class="btn btn-success btn-block">Add Game</button>
 		<form id="addGameForm" method="post" action="addGame.php" style="display: none;">
     
         <div class="form-group">
@@ -182,7 +182,7 @@ if (intval($admin[0]['admin'] != 1)){
 	</div>
 
     <div class="container w-75 mt-5">
-    <button id="show-form-btn" onclick="toggleTableBets()" class="btn btn-success">Update Bet Result</button>
+    <button id="show-form-btn" onclick="toggleTableBets()" class="btn btn-success btn-block">Update Bet Result</button>
         <table id="betsTable" class="table table-bordered" style="display: none;">
         <thead>
             <th width=20%>Bet ID
@@ -223,9 +223,8 @@ if (intval($admin[0]['admin'] != 1)){
             </form>
 <?php endforeach; ?>
 	</div>
-
 <div class="container w-75 mt-5">
-    <button id="show-form-btn" onclick="toggleBalanceSheet()" class="btn btn-success">Display Balance Sheet</button>  
+    <button id="show-table-btn" onclick="toggleBalanceSheet()" class="btn btn-dark btn-block">Display Balance Sheet</button>  
         <table id="balanceSheetTable" class="table table-bordered" style="display: none;">
         <thead>
         <tr>
@@ -253,15 +252,14 @@ if (intval($admin[0]['admin'] != 1)){
     </tbody>
     </table>
 
-    <h2> Summary Statistics: </h2>
-    <ul style="list-style-type:none;">
-            <li>Active Bet Deposits: $<?php echo $balanceSheetItems[1];?></li>
-            <li>Gross Revenue: $<?php echo $balanceSheetItems[2];?></li>
-            <li>Gross Liabilities: $<?php echo $balanceSheetItems[3];?></li>
-            <li>Net Profits: $<?php echo $balanceSheetItems[2] - $balanceSheetItems[3];?></li>
+    <h2> Summary of Finances: </h2>
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item">Active Bet Deposits: $<?php echo $balanceSheetItems[1];?></li>
+            <li class="list-group-item">Gross Revenue: $<?php echo $balanceSheetItems[2];?></li>
+            <li class="list-group-item">Gross Liabilities: $<?php echo $balanceSheetItems[3];?></li>
+            <li class="list-group-item">Net Profits: <b>$<?php echo $balanceSheetItems[2] - $balanceSheetItems[3];?></b></li>
     </ul>
 
-	</div>
 </div>
 </body>
 </html>
