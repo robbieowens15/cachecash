@@ -4,6 +4,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <?php
+session_start();
 require 'connect-db.php';
 $user = $_SESSION['name'];
 

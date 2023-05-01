@@ -99,7 +99,13 @@ $bets = getBets($db, $user);
 	    foreach ($friends as $running_variable):
         ?>
 		<tr>
-        <td><?php echo $running_variable['username']; ?></td> <td><?php echo $running_variable['email']; ?></td> 
+        <td><?php echo $running_variable['username']; ?></td>
+        <td><?php echo $running_variable['email']; ?></td>
+        <td> <form action="removeFriend.php" method="POST">
+            <input type="hidden" name="email1" value="<?php echo $profile[0]['email'] ?>">
+            <input type="hidden" name="email2" value="<?php echo $running_variable['email'] ?>">
+            <button type="submit" class="btn btn-danger">Remove Friend</button>
+        </form> </td>
 
 		</tr>
 <?php endforeach; ?>

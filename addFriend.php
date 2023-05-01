@@ -1,4 +1,5 @@
 <?php
+    session_start();
 	require 'connect-db.php';
 	$prof = $_GET['prof'];
     $user = $_SESSION['name'];
