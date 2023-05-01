@@ -38,6 +38,7 @@ $comments = getMessages($db);
 <div class="form-outline mb-4 w-50 center">
     <form method="post" action="addComment.php" >
           <input type="text" name="commentVal" id="commentVal" class="form-control" placeholder="Talk smack!" required/>
+          <br>
           <button type="submit" class="btn btn-primary center w-25">Submit</button>
     </form>
  </div>
