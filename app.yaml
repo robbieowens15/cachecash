@@ -6,3 +6,12 @@ runtime: php74
 
 # If your main page is index.php, comment the above entrypoint setting
 
+handlers:
+- url: /css
+  static_dir: css
+- url: /img
+  static_dir: img
+# - url: /.*
+#   script: auto
+#   options:
+#     session_affinity: true

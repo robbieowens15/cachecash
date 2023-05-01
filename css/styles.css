@@ -31,3 +31,118 @@ ul {
   .active {
 	background-color: #04AA6D;
   }
+  .center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+  }
+.card-profile{
+	background-color: #fff;
+	width: 50%;
+	border-radius: 33px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	padding: 2rem !important;
+}
+.top-container{
+	display: flex;
+	align-items: center;
+}
+.profile-image{
+	border-radius: 10px;
+	border: 2px solid #05AF50;
+}
+.name{
+	font-size: 15px;
+	font-weight: bold;
+	color: #272727;
+	position: relative;
+	top: 8px;
+}
+.mail{
+	font-size: 14px;
+	color: grey;
+	position: relative;
+	top: 2px;
+}
+.middle-container{
+	background-color: #eee;
+	border-radius: 12px;
+	display: inline;
+}
+.middle-container:hover {
+	border: 1px solid #05AF50;
+}
+.dollar-div{
+	background-color: #05AF50;
+	padding: 12px;
+	border-radius: 10px;
+}
+.round-div{
+	border-radius: 50%;
+	width: 35px;
+	height: 35px;
+	background-color: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+.dollar{
+	font-size: 16px !important;
+	color: #05AF50 !important;
+	font-weight: bold !important;
+}
+
+
+.current-balance{
+	font-size: 15px;
+	color: #272727;
+	font-weight: bold;
+}
+.amount{
+	color: #05AF50;
+	font-size: 16px;
+	font-weight: bold;
+}
+.dollar-sign{
+	font-size: 16px;
+	color: #272727;
+	font-weight: bold;
+}
+
+
+.recent-orders{
+	font-size: 16px;
+	font-weight: 700;
+	color: #05AF50;
+	margin-left: 2px;   
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;        
+}
+
+.card-body{
+	background-color: #fff;
+	width: 100%;
+	border-radius: 33px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.h-custom {
+height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+.h-custom {
+height: 100%;
+}
+}
